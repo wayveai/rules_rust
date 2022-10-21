@@ -10,7 +10,7 @@ use crate::metadata::{CrateAnnotation, Dependency, PairredExtras, SourceAnnotati
 use crate::utils::sanitize_module_name;
 use crate::utils::starlark::{Glob, SelectList, SelectMap, SelectStringDict, SelectStringList};
 
-#[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize, Clone)]
+#[derive(Debug, PartialOrd, Ord, Serialize, Deserialize, Clone)]
 pub struct CrateDependency {
     /// The [CrateId] of the dependency
     pub id: CrateId,
@@ -23,6 +23,14 @@ pub struct CrateDependency {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub alias: Option<String>,
 }
+
+impl PartialEq for CrateDependency {
+    fn eq(&self, other: &CrateDependency) -> bool {
+        self.id == other.id && self.target == other.target
+    }
+}
+
+impl Eq for CrateDependency {}
 
 #[derive(Debug, Default, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize, Clone)]
 #[serde(default)]
@@ -78,6 +86,9 @@ pub struct CommonAttributes {
     #[serde(skip_serializing_if = "BTreeSet::is_empty")]
     pub extra_deps: BTreeSet<String>,
 
+    #[serde(skip_serializing_if = "BTreeSet::is_empty")]
+    pub skipped_deps: BTreeSet<String>,
+
     #[serde(skip_serializing_if = "SelectList::should_skip_serializing")]
     pub deps_dev: SelectList<CrateDependency>,
 
@@ -121,6 +132,7 @@ impl Default for CommonAttributes {
             data_glob: Default::default(),
             deps: Default::default(),
             extra_deps: Default::default(),
+            skipped_deps: Default::default(),
             deps_dev: Default::default(),
             edition: Default::default(),
             linker_script: Default::default(),
@@ -382,6 +394,18 @@ impl CrateContext {
             // Deps
             if let Some(extra) = &crate_extra.deps {
                 self.common_attrs.extra_deps = extra.clone();
+            }
+
+            // Skipped deps
+            if let Some(skipped_deps) = &crate_extra.skipped_deps {
+                for skipped_dep in skipped_deps {
+                    let skipped_dep_copy = skipped_dep.clone();
+                    let dep_filter = |dep: &CrateDependency| dep.target == skipped_dep_copy;
+                    self.common_attrs.deps.remove_if(dep_filter);
+                    self.common_attrs.deps_dev.remove_if(dep_filter);
+                    self.common_attrs.proc_macro_deps.remove_if(dep_filter);
+                    self.common_attrs.proc_macro_deps_dev.remove_if(dep_filter);
+                }
             }
 
             // Proc macro deps

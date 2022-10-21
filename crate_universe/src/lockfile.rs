@@ -252,7 +252,7 @@ mod test {
 
         assert_eq!(
             digest,
-            Digest("756a613410573552bb8a85d6fcafd24a9df3000b8d943bf74c38bda9c306ef0e".to_owned())
+            Digest("cdcf8a1b23e9ca87f32d189d776fb308939205909192566a0a8d858dc18ac555".to_owned())
         );
     }
 

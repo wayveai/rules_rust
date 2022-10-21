@@ -78,6 +78,7 @@ def _annotation(
         data = None,
         data_glob = None,
         deps = None,
+        skipped_deps = None,
         gen_build_script = None,
         patch_args = None,
         patch_tool = None,
@@ -114,6 +115,7 @@ def _annotation(
         data (list, optional): A list of labels to add to a crate's `rust_library::data` attribute.
         data_glob (list, optional): A list of glob patterns to add to a crate's `rust_library::data` attribute.
         deps (list, optional): A list of labels to add to a crate's `rust_library::deps` attribute.
+        skipped_deps (list, optional): A list of dependencies on a crate to skip, usually so they can be replaced with your own implementation of one.
         gen_build_script (bool, optional): An authorative flag to determine whether or not to produce
             `cargo_build_script` targets for the current crate.
         patch_args (list, optional): The `patch_args` attribute of a Bazel repository rule. See
@@ -159,6 +161,7 @@ def _annotation(
             data = data,
             data_glob = data_glob,
             deps = deps,
+            skipped_deps = skipped_deps,
             gen_build_script = gen_build_script,
             patch_args = patch_args,
             patch_tool = patch_tool,
