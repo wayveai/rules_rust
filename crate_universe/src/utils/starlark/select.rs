@@ -18,12 +18,12 @@ pub trait Select<T> {
 }
 
 #[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Deserialize, Serialize, Clone)]
-pub struct SelectList<T: Ord> {
+pub struct SelectList<T: Ord + Clone> {
     common: BTreeSet<T>,
     selects: BTreeMap<String, BTreeSet<T>>,
 }
 
-impl<T: Ord> Default for SelectList<T> {
+impl<T: Ord + Clone> Default for SelectList<T> {
     fn default() -> Self {
         Self {
             common: BTreeSet::new(),
@@ -32,7 +32,7 @@ impl<T: Ord> Default for SelectList<T> {
     }
 }
 
-impl<T: Ord> SelectList<T> {
+impl<T: Ord + Clone> SelectList<T> {
     // TODO: This should probably be added to the [Select] trait
     pub fn insert(&mut self, value: T, configuration: Option<String>) {
         match configuration {
@@ -54,6 +54,40 @@ impl<T: Ord> SelectList<T> {
         };
     }
 
+    pub fn any_matches<F>(&mut self, mut match_fn: F) -> bool
+    where
+        F: FnMut(&T) -> bool,
+    {
+        self.common.iter().any(&mut match_fn)
+            || self
+                .selects
+                .iter()
+                .any(|(_, set)| set.iter().any(&mut match_fn))
+    }
+
+    pub fn remove_if<F>(&mut self, mut filter: F)
+    where
+        F: FnMut(&T) -> bool,
+    {
+        for (_cfg, set) in self.selects.iter_mut() {
+            if set.iter().any(&mut filter) {
+                *set = set
+                    .iter()
+                    .cloned()
+                    .filter(|item| !filter(item))
+                    .collect::<BTreeSet<T>>();
+            }
+        }
+        if self.common.iter().any(&mut filter) {
+            self.common = self
+                .common
+                .iter()
+                .cloned()
+                .filter(|item| !filter(item))
+                .collect::<BTreeSet<T>>();
+        }
+    }
+
     // TODO: This should probably be added to the [Select] trait
     pub fn get_iter<'a>(&'a self, config: Option<&String>) -> Option<btree_set::Iter<T>> {
         match config {
@@ -68,7 +102,7 @@ impl<T: Ord> SelectList<T> {
     }
 }
 
-impl<T: Ord> Select<T> for SelectList<T> {
+impl<T: Ord + Clone> Select<T> for SelectList<T> {
     fn configurations(&self) -> BTreeSet<Option<&String>> {
         let configs = self.selects.keys().map(Some);
         match self.common.is_empty() {
@@ -78,7 +112,7 @@ impl<T: Ord> Select<T> for SelectList<T> {
     }
 }
 
-impl<T: Ord, U: Ord> SelectMap<T, U> for SelectList<T> {
+impl<T: Ord + Clone, U: Ord + Clone> SelectMap<T, U> for SelectList<T> {
     type Mapped = SelectList<U>;
 
     fn map<F: Copy + Fn(T) -> U>(self, func: F) -> Self::Mapped {
