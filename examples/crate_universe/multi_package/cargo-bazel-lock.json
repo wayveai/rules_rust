@@ -1,5 +1,5 @@
 {
-  "checksum": "8ecc9603810e9d090c1c5f9d861e49fc5cdb492cbc6e53d4d5fd571c34d1bc0a",
+  "checksum": "b2690f731cc4ca673cad78d194d82c8dd40f44249e13a705e271cf9401cf5e96",
   "crates": {
     "aho-corasick 0.7.19": {
       "name": "aho-corasick",
@@ -1156,7 +1156,7 @@
               "target": "lalrpop_util"
             },
             {
-              "id": "regex 1.6.0",
+              "id": "regex 1.7.0",
               "target": "regex"
             }
           ],
@@ -1535,13 +1535,13 @@
       },
       "license": "MIT"
     },
-    "cc 1.0.74": {
+    "cc 1.0.76": {
       "name": "cc",
-      "version": "1.0.74",
+      "version": "1.0.76",
       "repository": {
         "Http": {
-          "url": "https://crates.io/api/v1/crates/cc/1.0.74/download",
-          "sha256": "581f5dba903aac52ea3feb5ec4810848460ee833876f1f9b0fdeab1f19091574"
+          "url": "https://crates.io/api/v1/crates/cc/1.0.76/download",
+          "sha256": "76a284da2e6fe2092f2353e51713435363112dfd60030e22add80be333fb928f"
         }
       },
       "targets": [
@@ -1576,7 +1576,7 @@
           "**"
         ],
         "edition": "2018",
-        "version": "1.0.74"
+        "version": "1.0.76"
       },
       "license": "MIT OR Apache-2.0"
     },
@@ -1991,7 +1991,7 @@
               "target": "build_script_build"
             },
             {
-              "id": "curl-sys 0.4.58+curl-7.86.0",
+              "id": "curl-sys 0.4.59+curl-7.86.0",
               "target": "curl_sys"
             },
             {
@@ -2036,7 +2036,7 @@
         "deps": {
           "common": [
             {
-              "id": "curl-sys 0.4.58+curl-7.86.0",
+              "id": "curl-sys 0.4.59+curl-7.86.0",
               "target": "curl_sys"
             }
           ],
@@ -2045,13 +2045,13 @@
       },
       "license": "MIT"
     },
-    "curl-sys 0.4.58+curl-7.86.0": {
+    "curl-sys 0.4.59+curl-7.86.0": {
       "name": "curl-sys",
-      "version": "0.4.58+curl-7.86.0",
+      "version": "0.4.59+curl-7.86.0",
       "repository": {
         "Http": {
-          "url": "https://crates.io/api/v1/crates/curl-sys/0.4.58+curl-7.86.0/download",
-          "sha256": "430e2ecf0c5f4445334472cf8f9611a6eea404b4135ca5500f38a97a128c913e"
+          "url": "https://crates.io/api/v1/crates/curl-sys/0.4.59+curl-7.86.0/download",
+          "sha256": "6cfce34829f448b08f55b7db6d0009e23e2e86a34e8c2b366269bf5799b4a407"
         }
       },
       "targets": [
@@ -2116,7 +2116,7 @@
           "@libssh2"
         ],
         "edition": "2018",
-        "version": "0.4.58+curl-7.86.0"
+        "version": "0.4.59+curl-7.86.0"
       },
       "license": "MIT"
     },
@@ -3872,7 +3872,7 @@
               "target": "futures_util"
             },
             {
-              "id": "hyper 0.14.22",
+              "id": "hyper 0.14.23",
               "target": "hyper"
             },
             {
@@ -3892,7 +3892,7 @@
               "target": "log"
             },
             {
-              "id": "regex 1.6.0",
+              "id": "regex 1.7.0",
               "target": "regex"
             },
             {
@@ -3936,13 +3936,13 @@
       },
       "license": "MIT"
     },
-    "hyper 0.14.22": {
+    "hyper 0.14.23": {
       "name": "hyper",
-      "version": "0.14.22",
+      "version": "0.14.23",
       "repository": {
         "Http": {
-          "url": "https://crates.io/api/v1/crates/hyper/0.14.22/download",
-          "sha256": "abfba89e19b959ca163c7752ba59d737c1ceea53a5d31a149c805446fc958064"
+          "url": "https://crates.io/api/v1/crates/hyper/0.14.23/download",
+          "sha256": "034711faac9d2166cb1baf1a2fb0b60b1f277f8492fd72176c17f3515e1abd3c"
         }
       },
       "targets": [
@@ -4045,7 +4045,7 @@
           "selects": {}
         },
         "edition": "2018",
-        "version": "0.14.22"
+        "version": "0.14.23"
       },
       "license": "MIT"
     },
@@ -4084,7 +4084,7 @@
               "target": "bytes"
             },
             {
-              "id": "hyper 0.14.22",
+              "id": "hyper 0.14.23",
               "target": "hyper"
             },
             {
@@ -4270,13 +4270,13 @@
       },
       "license": "BSD-3-Clause"
     },
-    "ipnet 2.5.0": {
+    "ipnet 2.5.1": {
       "name": "ipnet",
-      "version": "2.5.0",
+      "version": "2.5.1",
       "repository": {
         "Http": {
-          "url": "https://crates.io/api/v1/crates/ipnet/2.5.0/download",
-          "sha256": "879d54834c8c76457ef4293a689b2a8c59b076067ad77b15efafbb05f92a592b"
+          "url": "https://crates.io/api/v1/crates/ipnet/2.5.1/download",
+          "sha256": "f88c5561171189e69df9d98bcf18fd5f9558300f7ea7b801eb8a0fd748bd8745"
         }
       },
       "targets": [
@@ -4302,7 +4302,7 @@
           "default"
         ],
         "edition": "2018",
-        "version": "2.5.0"
+        "version": "2.5.1"
       },
       "license": "MIT OR Apache-2.0"
     },
@@ -4373,7 +4373,7 @@
               "target": "curl"
             },
             {
-              "id": "curl-sys 0.4.58+curl-7.86.0",
+              "id": "curl-sys 0.4.59+curl-7.86.0",
               "target": "curl_sys"
             },
             {
@@ -4699,11 +4699,11 @@
               "target": "pico_args"
             },
             {
-              "id": "regex 1.6.0",
+              "id": "regex 1.7.0",
               "target": "regex"
             },
             {
-              "id": "regex-syntax 0.6.27",
+              "id": "regex-syntax 0.6.28",
               "target": "regex_syntax"
             },
             {
@@ -4767,7 +4767,7 @@
         "deps": {
           "common": [
             {
-              "id": "regex 1.6.0",
+              "id": "regex 1.7.0",
               "target": "regex"
             }
           ],
@@ -4974,7 +4974,7 @@
         "deps": {
           "common": [
             {
-              "id": "cc 1.0.74",
+              "id": "cc 1.0.76",
               "target": "cc"
             }
           ],
@@ -5050,7 +5050,7 @@
         "deps": {
           "common": [
             {
-              "id": "cc 1.0.74",
+              "id": "cc 1.0.76",
               "target": "cc"
             },
             {
@@ -5574,13 +5574,13 @@
       },
       "license": "MIT"
     },
-    "num_cpus 1.13.1": {
+    "num_cpus 1.14.0": {
       "name": "num_cpus",
-      "version": "1.13.1",
+      "version": "1.14.0",
       "repository": {
         "Http": {
-          "url": "https://crates.io/api/v1/crates/num_cpus/1.13.1/download",
-          "sha256": "19e64526ebdee182341572e50e9ad03965aa510cd94427a4549448f285e957a1"
+          "url": "https://crates.io/api/v1/crates/num_cpus/1.14.0/download",
+          "sha256": "f6058e64324c71e02bc2b150e4f3bc8286db6c83092132ffa3f6b1eab0f9def5"
         }
       },
       "targets": [
@@ -5620,7 +5620,7 @@
           }
         },
         "edition": "2015",
-        "version": "1.13.1"
+        "version": "1.14.0"
       },
       "license": "MIT OR Apache-2.0"
     },
@@ -5969,7 +5969,7 @@
               "target": "autocfg"
             },
             {
-              "id": "cc 1.0.74",
+              "id": "cc 1.0.76",
               "target": "cc"
             },
             {
@@ -7007,13 +7007,13 @@
       },
       "license": "MIT"
     },
-    "regex 1.6.0": {
+    "regex 1.7.0": {
       "name": "regex",
-      "version": "1.6.0",
+      "version": "1.7.0",
       "repository": {
         "Http": {
-          "url": "https://crates.io/api/v1/crates/regex/1.6.0/download",
-          "sha256": "4c4eb3267174b8c6c2f654116623910a0fef09c4753f8dd83db29c48a0df988b"
+          "url": "https://crates.io/api/v1/crates/regex/1.7.0/download",
+          "sha256": "e076559ef8e241f2ae3479e36f97bd5741c0330689e217ad51ce2c76808b868a"
         }
       },
       "targets": [
@@ -7065,24 +7065,24 @@
               "target": "memchr"
             },
             {
-              "id": "regex-syntax 0.6.27",
+              "id": "regex-syntax 0.6.28",
               "target": "regex_syntax"
             }
           ],
           "selects": {}
         },
         "edition": "2018",
-        "version": "1.6.0"
+        "version": "1.7.0"
       },
       "license": "MIT OR Apache-2.0"
     },
-    "regex-syntax 0.6.27": {
+    "regex-syntax 0.6.28": {
       "name": "regex-syntax",
-      "version": "0.6.27",
+      "version": "0.6.28",
       "repository": {
         "Http": {
-          "url": "https://crates.io/api/v1/crates/regex-syntax/0.6.27/download",
-          "sha256": "a3f87b73ce11b1619a3c6332f45341e0047173771e8b8b73f87bfeefb7b56244"
+          "url": "https://crates.io/api/v1/crates/regex-syntax/0.6.28/download",
+          "sha256": "456c603be3e8d448b072f410900c09faf164fbce2d480456f50eea6e25f9c848"
         }
       },
       "targets": [
@@ -7116,7 +7116,7 @@
           "unicode-segment"
         ],
         "edition": "2018",
-        "version": "0.6.27"
+        "version": "0.6.28"
       },
       "license": "MIT OR Apache-2.0"
     },
@@ -7261,7 +7261,7 @@
                 "target": "http_body"
               },
               {
-                "id": "hyper 0.14.22",
+                "id": "hyper 0.14.23",
                 "target": "hyper"
               },
               {
@@ -7269,7 +7269,7 @@
                 "target": "hyper_tls"
               },
               {
-                "id": "ipnet 2.5.0",
+                "id": "ipnet 2.5.1",
                 "target": "ipnet"
               },
               {
@@ -7878,7 +7878,7 @@
         "deps": {
           "common": [
             {
-              "id": "regex 1.6.0",
+              "id": "regex 1.7.0",
               "target": "regex"
             },
             {
@@ -8956,7 +8956,7 @@
               "target": "mio"
             },
             {
-              "id": "num_cpus 1.13.1",
+              "id": "num_cpus 1.14.0",
               "target": "num_cpus"
             },
             {
@@ -10490,7 +10490,7 @@
         "deps": {
           "common": [
             {
-              "id": "cc 1.0.74",
+              "id": "cc 1.0.76",
               "target": "cc"
             }
           ],
@@ -11729,7 +11729,7 @@
     }
   },
   "binary_crates": [
-    "cc 1.0.74",
+    "cc 1.0.76",
     "httpmock 0.6.6",
     "lalrpop 0.19.8"
   ],
