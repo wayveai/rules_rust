@@ -1,5 +1,5 @@
 {
-  "checksum": "174330374159f2c7ba8e256af2db0e4f274dc2b35e0ee6d660288a34376516ab",
+  "checksum": "8d9b5ef0cff910bb72d53dd5760785217ebc272be5ebe7cf31f7813ce5769875",
   "crates": {
     "autocfg 1.1.0": {
       "name": "autocfg",
@@ -112,7 +112,7 @@
           "selects": {
             "cfg(target_os = \"linux\")": [
               {
-                "id": "nix 0.26.2",
+                "id": "nix 0.26.4",
                 "target": "nix"
               }
             ]
@@ -123,13 +123,13 @@
       },
       "license": null
     },
-    "libc 0.2.146": {
+    "libc 0.2.149": {
       "name": "libc",
-      "version": "0.2.146",
+      "version": "0.2.149",
       "repository": {
         "Http": {
-          "url": "https://crates.io/api/v1/crates/libc/0.2.146/download",
-          "sha256": "f92be4933c13fd498862a9e02a3055f8a8d9c039ce33db97306fd5a6caa7f29b"
+          "url": "https://crates.io/api/v1/crates/libc/0.2.149/download",
+          "sha256": "a08173bc88b7955d1b3145aa561539096c421ac8debde8cbc3612ec635fee29b"
         }
       },
       "targets": [
@@ -168,14 +168,14 @@
         "deps": {
           "common": [
             {
-              "id": "libc 0.2.146",
+              "id": "libc 0.2.149",
               "target": "build_script_build"
             }
           ],
           "selects": {}
         },
         "edition": "2015",
-        "version": "0.2.146"
+        "version": "0.2.149"
       },
       "build_script_attrs": {
         "data_glob": [
@@ -252,13 +252,13 @@
       },
       "license": "MIT"
     },
-    "nix 0.26.2": {
+    "nix 0.26.4": {
       "name": "nix",
-      "version": "0.26.2",
+      "version": "0.26.4",
       "repository": {
         "Http": {
-          "url": "https://crates.io/api/v1/crates/nix/0.26.2/download",
-          "sha256": "bfdda3d196821d6af13126e40375cdf7da646a96114af134d5f417a9a1dc8e1a"
+          "url": "https://crates.io/api/v1/crates/nix/0.26.4/download",
+          "sha256": "598beaf3cc6fdd9a5dfb1630c2800c7acd31df7aaf0f565796fba2b53ca1af1b"
         }
       },
       "targets": [
@@ -328,16 +328,12 @@
               "target": "cfg_if"
             },
             {
-              "id": "libc 0.2.146",
+              "id": "libc 0.2.149",
               "target": "libc"
             },
             {
               "id": "pin-utils 0.1.0",
               "target": "pin_utils"
-            },
-            {
-              "id": "static_assertions 1.1.0",
-              "target": "static_assertions"
             }
           ],
           "selects": {
@@ -350,7 +346,7 @@
           }
         },
         "edition": "2018",
-        "version": "0.26.2"
+        "version": "0.26.4"
       },
       "license": "MIT"
     },
@@ -381,36 +377,6 @@
         ],
         "edition": "2018",
         "version": "0.1.0"
-      },
-      "license": "MIT OR Apache-2.0"
-    },
-    "static_assertions 1.1.0": {
-      "name": "static_assertions",
-      "version": "1.1.0",
-      "repository": {
-        "Http": {
-          "url": "https://crates.io/api/v1/crates/static_assertions/1.1.0/download",
-          "sha256": "a2eb9349b6444b326872e140eb1cf5e7c522154d69e7a0ffb0fb81c06b37543f"
-        }
-      },
-      "targets": [
-        {
-          "Library": {
-            "crate_name": "static_assertions",
-            "crate_root": "src/lib.rs",
-            "srcs": [
-              "**/*.rs"
-            ]
-          }
-        }
-      ],
-      "library_target_name": "static_assertions",
-      "common_attrs": {
-        "compile_data_glob": [
-          "**"
-        ],
-        "edition": "2015",
-        "version": "1.1.0"
       },
       "license": "MIT OR Apache-2.0"
     }

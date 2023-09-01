@@ -173,9 +173,6 @@ crates_repository(
             build_script_data_glob = ["nghttp2/**"],
             data_glob = ["nghttp2/**"],
         )],
-        "wepoll-ffi": [crate.annotation(
-            build_script_data_glob = ["vendor/**"],
-        )],
     },
     cargo_lockfile = "//multi_package:Cargo.Bazel.lock",
     # `generator` is not necessary in official releases.
