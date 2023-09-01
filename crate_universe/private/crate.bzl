@@ -86,6 +86,7 @@ def _annotation(
         deps = None,
         gen_binaries = [],
         disable_pipelining = False,
+        dep_overrides = None,
         gen_build_script = None,
         patch_args = None,
         patch_tool = None,
@@ -126,6 +127,8 @@ def _annotation(
         gen_binaries (list or bool, optional): As a list, the subset of the crate's bins that should get `rust_binary`
             targets produced. Or `True` to generate all, `False` to generate none.
         disable_pipelining (bool, optional): If True, disables pipelining for library targets for this crate.
+        dep_overrides (dict, optional): A dictionary of of crate names that should be replaced with a Bazel dependency
+            in the `rust_library::deps` attribute.
         gen_build_script (bool, optional): An authorative flag to determine whether or not to produce
             `cargo_build_script` targets for the current crate.
         patch_args (list, optional): The `patch_args` attribute of a Bazel repository rule. See
@@ -173,6 +176,7 @@ def _annotation(
             deps = deps,
             gen_binaries = gen_binaries,
             disable_pipelining = disable_pipelining,
+            dep_overrides = dep_overrides,
             gen_build_script = gen_build_script,
             patch_args = patch_args,
             patch_tool = patch_tool,
