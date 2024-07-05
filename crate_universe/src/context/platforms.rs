@@ -1,11 +1,39 @@
 use std::collections::{BTreeMap, BTreeSet};
 
 use anyhow::{anyhow, Context, Result};
-use cfg_expr::targets::{get_builtin_target_by_triple, TargetInfo};
+use cfg_expr::targets::{
+    get_builtin_target_by_triple, Arch, Endian, Env, Families, HasAtomics, Os, Panic, TargetInfo,
+    Triple, Vendor,
+};
 use cfg_expr::{Expression, Predicate};
 
 use crate::context::CrateContext;
 use crate::utils::starlark::Select;
+
+pub const ADDON_ALL_BUILTINS: &[TargetInfo] = &[TargetInfo {
+    triple: Triple::new_const("aarch64-unknown-drive_linux-gnu"),
+    os: Some(Os::new_const("drive_linux")),
+    abi: None,
+    arch: Arch::aarch64,
+    env: Some(Env::gnu),
+    vendor: Some(Vendor::unknown),
+    families: Families::unix,
+    pointer_width: 64,
+    endian: Endian::little,
+    has_atomics: HasAtomics::atomic_8_16_32_64_128_ptr,
+    panic: Panic::unwind,
+}];
+
+fn get_builtin_target_by_triple_wrapper(triple: &str) -> Option<&'static TargetInfo> {
+    if triple == "aarch64-unknown-drive_linux-gnu" {
+        ADDON_ALL_BUILTINS
+            .binary_search_by(|ti| ti.triple.as_ref().cmp(triple))
+            .map(|i| &ADDON_ALL_BUILTINS[i])
+            .ok()
+    } else {
+        get_builtin_target_by_triple(triple)
+    }
+}
 
 /// Walk through all dependencies in a [CrateContext] list for all configuration specific
 /// dependencies to produce a mapping of configuration to compatible platform triples.
@@ -44,7 +72,7 @@ pub fn resolve_cfg_platforms(
     // Generate target information for each triple string
     let target_infos = supported_platform_triples
         .iter()
-        .map(|t| match get_builtin_target_by_triple(t) {
+        .map(|t| match get_builtin_target_by_triple_wrapper(t) {
             Some(info) => Ok(info),
             None => Err(anyhow!(
                 "Invalid platform triple in supported platforms: {}",

@@ -315,6 +315,11 @@ CARGO_BAZEL_REPIN=1 CARGO_BAZEL_REPIN_ONLY=crate_index bazel sync --only=crate_i
             doc = "A set of all platform triples to consider when generating dependencies.",
             default = SUPPORTED_PLATFORM_TRIPLES,
         ),
+        "supported_platform_target_jsons": attr.label_keyed_string_dict(
+            doc = "Dictionary of `target_json` -> `host_triple` for `cargo` and `rustc` --target argument. This is used for platforms not supported by rust by default.",
+            allow_files=True,
+            default = {},
+        ),
     },
     environ = CRATES_REPOSITORY_ENVIRON,
 )

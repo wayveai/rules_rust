@@ -427,15 +427,26 @@ impl FeatureGenerator {
         &self,
         manifest_path: &Path,
         platform_triples: &BTreeSet<String>,
+        platform_target_json_mapping: &BTreeMap<String, String>,
     ) -> Result<BTreeMap<CrateId, SelectList<String>>> {
         let manifest_dir = manifest_path.parent().unwrap();
         let mut target_to_child = BTreeMap::new();
+
         for target in platform_triples {
             // We use `cargo tree` here because `cargo metadata` doesn't report
             // back target-specific features (enabled with `resolver = "2"`).
             // This is unfortunately a bit of a hack. See:
             // - https://github.com/rust-lang/cargo/issues/9863
             // - https://github.com/bazelbuild/rules_rust/issues/1662
+
+            // For platform triples rust doesn't support directly, use the target_json file passed into platform_target_json_mapping.
+            // We have to pass target_json file for those target triples, otherwise `cargo` and `rustc` command will failed.
+            // For platform triples rust directly supported, no need to pass target_json file, just use the platform triple.
+            let target_argument = platform_target_json_mapping
+                .get(target)
+                .map(String::as_str)
+                .unwrap_or(target);
+
             let output = self
                 .cargo_bin
                 .command()?
@@ -450,7 +461,7 @@ impl FeatureGenerator {
                 .arg("--color=never")
                 .arg("--workspace")
                 .arg("--target")
-                .arg(target)
+                .arg(target_argument)
                 .env("RUSTC", &self.rustc_bin)
                 .stdout(std::process::Stdio::piped())
                 .stderr(std::process::Stdio::piped())

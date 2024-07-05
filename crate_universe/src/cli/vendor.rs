@@ -147,6 +147,7 @@ pub fn vendor(opt: VendorOptions) -> Result<()> {
     let feature_map = FeatureGenerator::new(cargo.clone(), opt.rustc.clone()).generate(
         manifest_path.as_path_buf(),
         &config.supported_platform_triples,
+        &config.platform_target_json_mapping,
     )?;
 
     // Write the registry url info to the manifest now that a lockfile has been generated

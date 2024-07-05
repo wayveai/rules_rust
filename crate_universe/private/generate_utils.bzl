@@ -1,6 +1,7 @@
 """Utilities directly related to the `generate` step of `cargo-bazel`."""
 
 load(":common_utils.bzl", "CARGO_BAZEL_ISOLATED", "REPIN_ALLOWLIST_ENV_VAR", "REPIN_ENV_VARS", "cargo_environ", "execute")
+load("@bazel_tools//tools/build_defs/repo:utils.bzl", "read_netrc", "read_user_netrc", "use_netrc")
 
 CARGO_BAZEL_GENERATOR_SHA256 = "CARGO_BAZEL_GENERATOR_SHA256"
 CARGO_BAZEL_GENERATOR_URL = "CARGO_BAZEL_GENERATOR_URL"
@@ -15,6 +16,30 @@ CRATES_REPOSITORY_ENVIRON = GENERATOR_ENV_VARS + REPIN_ENV_VARS + [
 ] + [
     CARGO_BAZEL_ISOLATED,
 ]
+
+RED = "\033[31m"
+BOLD = "\033[1m"
+CLEAR = "\033[0m"
+
+def _get_auth(ctx, urls):
+    if "NETRC" in ctx.os.environ:
+        netrc = read_netrc(ctx, ctx.os.environ["NETRC"])
+    else:
+        netrc = read_user_netrc(ctx)
+    return use_netrc(netrc, urls, patterns = {})
+
+def _verify_auth(ctx, auth):
+    credentials = auth.values()
+    if len(credentials) == 0:
+        fail("""
+            {}No credentials found to authenticate to our Artifactory.
+            Please run `{}make setup{}{}` in the root of your repository to set up your credentials.
+
+            If this doesn't resolve your issue, check your ~/.netrc file, delete any credentials that look related to
+            Artifactory, and run `{}make setup{}{}` again.
+
+            If you're still having issues, please reach out in #devops-support on Slack.
+        """.format(RED, BOLD, CLEAR, RED, BOLD, CLEAR, RED))
 
 def get_generator(repository_ctx, host_triple):
     """Query network resources to locate a `cargo-bazel` binary
@@ -62,6 +87,9 @@ def get_generator(repository_ctx, host_triple):
             "environment variable or for the `{}` triple in the `generator_urls` attribute"
         ).format(host_triple))
 
+    auth = _get_auth(repository_ctx, [generator_url])
+    _verify_auth(repository_ctx, auth)
+
     # Download the file into place
     if generator_sha256:
         repository_ctx.download(
@@ -69,6 +97,7 @@ def get_generator(repository_ctx, host_triple):
             url = generator_url,
             sha256 = generator_sha256,
             executable = True,
+            auth = auth,
         )
         return output, None
 
@@ -76,6 +105,7 @@ def get_generator(repository_ctx, host_triple):
         output = output,
         url = generator_url,
         executable = True,
+        auth = auth,
     )
 
     return output, {host_triple: result.sha256}
@@ -217,6 +247,7 @@ def compile_config(
         cargo_config,
         render_config,
         supported_platform_triples,
+        supported_platform_target_jsons,
         repository_name,
         repository_ctx = None):
     """Create a config file for generating crate targets
@@ -258,6 +289,14 @@ def compile_config(
     if unexpected:
         fail("The following annotations use `additive_build_file` which is not supported for {}: {}".format(repository_name, unexpected))
 
+    # supported_platform_target_jsons is dictionary with key: `target_json`. value: `host_triple`.
+    # The reason to define target_json as key is that target_json needs to be labeled to resolve absolute path whereas bazel only support type label_keyed_string_dict (labeled key + string value).
+    # Construct below dictionary to have key: `host_triple`. value: `target_json`, which eases the consumption for crate_bazel.
+    platform_target_json_mapping = {}
+    for target_json, platform_host_triple in supported_platform_target_jsons.items():
+        target_json_file = repository_ctx.path(target_json)
+        platform_target_json_mapping[platform_host_triple] = str(target_json_file)
+
     config = struct(
         generate_binaries = generate_binaries,
         generate_build_scripts = generate_build_scripts,
@@ -269,6 +308,7 @@ def compile_config(
             repository_name = repository_name,
         ),
         supported_platform_triples = supported_platform_triples,
+        platform_target_json_mapping = platform_target_json_mapping,
     )
 
     return config
@@ -291,6 +331,7 @@ def generate_config(repository_ctx):
         cargo_config = _read_cargo_config(repository_ctx),
         render_config = _get_render_config(repository_ctx),
         supported_platform_triples = repository_ctx.attr.supported_platform_triples,
+        supported_platform_target_jsons = repository_ctx.attr.supported_platform_target_jsons,
         repository_name = repository_ctx.name,
         repository_ctx = repository_ctx,
     )

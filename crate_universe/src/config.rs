@@ -633,6 +633,9 @@ pub struct Config {
     /// A set of platform triples to use in generated select statements
     #[serde(default, skip_serializing_if = "BTreeSet::is_empty")]
     pub supported_platform_triples: BTreeSet<String>,
+
+    #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
+    pub platform_target_json_mapping: BTreeMap<String, String>,
 }
 
 impl Config {

@@ -27,6 +27,7 @@ _SUPPORTED_SYSTEMS = [
     "freebsd",
     "ios",
     "linux",
+    "drive_linux",
     "windows",
 ]
 
@@ -88,5 +89,6 @@ def declare_config_settings():
             ":darwin",
             ":freebsd",
             ":linux",
+            ":drive_linux",
         ],
     )

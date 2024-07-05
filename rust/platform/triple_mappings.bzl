@@ -5,6 +5,7 @@ load("//rust/platform:triple.bzl", "triple")
 # All T1 Platforms should be supported, but aren't, see inline notes.
 SUPPORTED_T1_PLATFORM_TRIPLES = [
     "aarch64-unknown-linux-gnu",
+    "aarch64-unknown-drive_linux-gnu",
     "i686-apple-darwin",
     "i686-pc-windows-msvc",
     "i686-unknown-linux-gnu",
@@ -92,6 +93,7 @@ _SYSTEM_TO_BUILTIN_SYS_SUFFIX = {
     "fuchsia": "fuchsia",
     "ios": "ios",
     "linux": "linux",
+    "drive_linux": "drive_linux",
     "nacl": None,
     "netbsd": None,
     "none": "none",
@@ -112,6 +114,7 @@ _SYSTEM_TO_BINARY_EXT = {
     "fuchsia": "",
     "ios": "",
     "linux": "",
+    "drive_linux": "",
     "none": "",
     # This is currently a hack allowing us to have the proper
     # generated extension for the wasm target, similarly to the
@@ -131,6 +134,7 @@ _SYSTEM_TO_STATICLIB_EXT = {
     "fuchsia": ".a",
     "ios": ".a",
     "linux": ".a",
+    "drive_linux": ".a",
     "none": ".a",
     "unknown": "",
     "wasi": "",
@@ -147,6 +151,7 @@ _SYSTEM_TO_DYLIB_EXT = {
     "fuchsia": ".so",
     "ios": ".dylib",
     "linux": ".so",
+    "drive_linux": ".so",
     "none": ".so",
     "unknown": ".wasm",
     "wasi": ".wasm",
@@ -186,6 +191,7 @@ _SYSTEM_TO_STDLIB_LINKFLAGS = {
     "ios": ["-lSystem", "-lobjc", "-Wl,-framework,Security", "-Wl,-framework,Foundation", "-lresolv"],
     # TODO: This ignores musl. Longer term what does Bazel think about musl?
     "linux": ["-ldl", "-lpthread"],
+    "drive_linux": ["-ldl", "-lpthread"],
     "nacl": [],
     "netbsd": ["-lpthread", "-lrt"],
     "none": [],
@@ -349,5 +355,4 @@ def triple_to_constraint_set(target_triple):
         arch = triple_struct.arch,
         system = triple_struct.system,
     )
-
     return constraint_set
