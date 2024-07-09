@@ -4,6 +4,7 @@ load("//rust/platform:triple.bzl", "triple")
 
 # All T1 Platforms should be supported, but aren't, see inline notes.
 SUPPORTED_T1_PLATFORM_TRIPLES = [
+    "aarch64-unknown-drive_linux-gnu", # Same as `aarch64-unknown-linux-gnu` but with `@platforms//os:drive_linux`.
     "aarch64-unknown-linux-gnu",
     "aarch64-unknown-nixos-gnu",  # Same as `aarch64-unknown-linux-gnu` but with `@platforms//os:nixos`.
     "i686-apple-darwin",
@@ -98,6 +99,7 @@ _SYSTEM_TO_BUILTIN_SYS_SUFFIX = {
     "fuchsia": "fuchsia",
     "ios": "ios",
     "linux": "linux",
+    "drive_linux": "drive_linux",
     "nacl": None,
     "netbsd": None,
     "nixos": "nixos",
@@ -113,6 +115,7 @@ _SYSTEM_TO_BUILTIN_SYS_SUFFIX = {
 _SYSTEM_TO_BINARY_EXT = {
     "android": "",
     "darwin": "",
+    "drive_linux": "",
     "eabi": "",
     "eabihf": "",
     "emscripten": ".js",
@@ -134,6 +137,7 @@ _SYSTEM_TO_BINARY_EXT = {
 _SYSTEM_TO_STATICLIB_EXT = {
     "android": ".a",
     "darwin": ".a",
+    "drive_linux": ".a",
     "eabi": ".a",
     "eabihf": ".a",
     "emscripten": ".js",
@@ -152,6 +156,7 @@ _SYSTEM_TO_STATICLIB_EXT = {
 _SYSTEM_TO_DYLIB_EXT = {
     "android": ".so",
     "darwin": ".dylib",
+    "drive_linux": ".so",
     "eabi": ".so",
     "eabihf": ".so",
     "emscripten": ".js",
@@ -200,6 +205,7 @@ _SYSTEM_TO_STDLIB_LINKFLAGS = {
     "ios": ["-lSystem", "-lobjc", "-Wl,-framework,Security", "-Wl,-framework,Foundation", "-lresolv"],
     # TODO: This ignores musl. Longer term what does Bazel think about musl?
     "linux": ["-ldl", "-lpthread"],
+    "drive_linux": ["-ldl", "-lpthread"],
     "nacl": [],
     "netbsd": ["-lpthread", "-lrt"],
     "nixos": ["-ldl", "-lpthread"],  # Same as `linux`.

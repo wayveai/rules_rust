@@ -19,3 +19,6 @@ additional places where community members gather to discuss `rules_rust`.
 <!-- TODO: Render generated docs on the github pages site again, https://bazelbuild.github.io/rules_rust/ -->
 
 Please refer to [the full documentation](https://bazelbuild.github.io/rules_rust).
+
+## Caveat
+Current branch contains changes for new platform, compilation for `cargo-bazel` will break since the new platform definition is outside of this repo. Please use this branch merely for patch purpose.

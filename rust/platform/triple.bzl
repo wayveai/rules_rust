@@ -37,6 +37,14 @@ def triple(triple):
             abi = None,
             str = triple,
         )
+    elif triple == "aarch64-unknown-drive_linux-gnu":
+        return struct(
+            arch = "aarch64",
+            system = "drive_linux",
+            vendor = "unknown",
+            abi = None,
+            str = "aarch64-unknown-linux-gnu",
+        )
 
     component_parts = triple.split("-")
     if len(component_parts) < 3:

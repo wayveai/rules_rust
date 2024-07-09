@@ -17,11 +17,17 @@ impl TargetTriple {
     }
 
     pub(crate) fn to_cargo(&self) -> String {
-        // While Bazel is NixOS aware (via `@platforms//os:nixos`), `rustc`
-        // is not, so any target triples for `nixos` get remapped to `linux`
+        // While Bazel is NixOS and DriveLinux aware (via `@platforms//os:nixos` or `@platforms//os:drive_linux`), `rustc`
+        // is not, so any target triples for `nixos` and get `drive_linux` remapped to `linux`
         // for the purposes of determining `cargo metadata`, resolving `cfg`
         // targets, etc.
-        self.0.replace("nixos", "linux")
+        let target_mapping = [("nixos", "linux"), ("drive_linux", "linux")];
+        for (bazel_target, cargo_target) in &target_mapping {
+            if self.0.contains(bazel_target) {
+                return self.0.replace(bazel_target, cargo_target);
+            }
+        }
+        self.0.clone()
     }
 }
 
